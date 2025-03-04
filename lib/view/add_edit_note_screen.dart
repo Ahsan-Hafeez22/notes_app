@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqlite_notes_app/db/db_helper.dart';
 import 'package:sqlite_notes_app/model/notes_model.dart';
+import 'package:sqlite_notes_app/view/home_screen.dart';
 
 class AddEditNoteScreen extends StatefulWidget {
   final Note? note;
@@ -55,6 +56,13 @@ class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
       await _databaseHelper.insertNote(note);
     } else {
       await _databaseHelper.updateNote(note);
+    }
+    if (mounted) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(),
+          ));
     }
   }
 
@@ -137,7 +145,6 @@ class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
                 InkWell(
                   onTap: () {
                     _saveNote();
-                    Navigator.pop(context);
                   },
                   child: Container(
                     padding: EdgeInsets.all(16),
